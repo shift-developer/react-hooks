@@ -138,5 +138,4 @@ export const CounterWithCustomHook = () => {
 ```
 
 
-[Volver a inicio](../../README.md)
 [Ir a => 🔂 useEffect](../02-useEffect/useEffect.md)
