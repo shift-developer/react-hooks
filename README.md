@@ -4,6 +4,13 @@
 
 Esta guia sirve para entender en profundidad los hooks de React. Contiene información extraida del curso de React de Fernando Herrera y de la documentación oficial de la herramienta. Además se incorpora un poco de contenido práctico sobre testing unitario de componentes con hooks, algo que es bastante escaso y dificil de encontrar.
 
+## 🚫 Reglas de los hooks
+
+- No llames Hooks dentro de ciclos, condicionales o funciones anidadas.
+- No llames Hooks desde funciones JavaScript regulares. En vez de eso, puedes:
+    - ✅ Llama Hooks desde componentes funcionales de React.
+    - ✅ Llama Hooks desde Hooks personalizados
+
 ## Hooks
 - [🔄 useState](./docs/01-useState/useState.md)
 - [🔂 useEffect](./docs/02-useEffect/useEffect.md)
