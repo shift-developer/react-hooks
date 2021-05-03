@@ -66,7 +66,7 @@ function Example() {
 }
 ```
 
-#### ⚠️ A tener en cuenta sobre el hook:
+### ⚠️ A tener en cuenta sobre el hook:
 - Al usar este Hook, le estamos indicando a React que el componente tiene que hacer algo después de renderizarse.
 - Poner useEffect dentro del componente nos permite acceder a la variable de estado count (o a cualquier prop) directamente desde el efecto.
 - Por defecto se ejecuta después del primer renderizado y después de cada actualización. 
@@ -148,7 +148,7 @@ function FriendStatusWithCounter(props) {
 }
 ```
 
-#### ⚠️ A tener en cuenta sobre el hook:
+### ⚠️ A tener en cuenta sobre el hook:
 - Todos los efectos pueden devolver una función que los sanea más tarde. Esto nos permite mantener la lógica de añadir y eliminar suscripciones cerca la una de la otra.
 - React sanea el efecto cuando el componente se desmonta y también sanea los efectos de renderizados anteriores antes de ejecutar los efectos del renderizado actual.
 
