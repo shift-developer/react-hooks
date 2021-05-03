@@ -1,5 +1,5 @@
 [Volver a inicio](../../README.md)
-
+---
 # 🔂 useEffect
 
 ## Efectos sin saneamiento
@@ -206,7 +206,48 @@ useEffect(() => {
 **Para ejecutar un efecto y sanearlo solamente una vez (al montar y desmontar), puedes pasar un array vacío ([]) como segundo argumento.**
 
 ---
-# Ejemplos
+# Ejemplo
+
+## Mouse event message
+
+```javascript
+import React, { useEffect, useState } from 'react'
+
+export const Message = () => {
+
+    const [coords, setCoords] = useState({ x:0, y: 0 })
+    const { x, y } = coords;
+
+    useEffect(() => {
+        
+        const mouseMove = (e) =>{
+            const coords = { x: e.x, y: e.y };
+            setCoords( coords );
+        }
+        
+        window.addEventListener('mousemove', mouseMove );
+
+
+        return () => {
+            window.removeEventListener('mousemove', mouseMove );
+        }
+    }, [])
+
+    return (
+        <div>
+            <h1>Coordenadas</h1>
+            <p>
+                x:{ x } y: { y }
+            </p>
+        </div>
+    )
+}
+
+```
+
+---
+[Ir a => 🛠️ customHooks](../03-customHooks/customHooks.md)
+
 
 
 

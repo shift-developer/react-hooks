@@ -86,56 +86,5 @@ export const CounterApp = () => {
 }
 ```
 
-### CounterApp (custom hook useCounter)
-```javascript
-// hooks/useCounter
-import { useState } from 'react';
-
-export const useCounter = ( initialState = 10 ) => {
-    
-    const [counter, setCounter] = useState(initialState);
-
-    const reset = () => {
-        setCounter( initialState );
-    }
-
-    const increment = () => {
-        setCounter( counter + 1 );
-    }
-
-    const decrement = () => {
-        setCounter( counter - 1 );
-    }
-
-    return {
-        counter,
-        increment,
-        decrement,
-        reset
-    };
-}
-
-
-// <CounterWithCustomHook/>
-import React from 'react';
-import { useCounter } from '../../hooks/useCounter';
-
-export const CounterWithCustomHook = () => {
-
-    const { state, increment, decrement, reset } = useCouter( 100 );
-
-    return (
-        <>
-          <h1>Counter with Hook: { state } </h1>
-          <hr />
-
-          <button onClick={ () => increment(2) } className="btn"> + 1</button>
-          <button onClick={ reset } className="btn"> Reset </button>
-          <button onClick={ () => decrement(2) } className="btn"> - 1</button>
-        </>
-    )
-}
-```
-
 
 [Ir a => 🔂 useEffect](../02-useEffect/useEffect.md)
