@@ -16,7 +16,7 @@ Esta guia sirve para entender en profundidad los hooks de React. Contiene inform
 - [🔂 useEffect](./docs/02-useEffect/useEffect.md)
 - [🛠️ customHooks](./docs/03-customHooks/customHooks.md)
 - [🔗 useRef](./docs/04-useRef/useRef.md)
-- [🔂  useLayoutEffect](./docs/05-useLayoutEffect/useLayoutEffect)
+- [🔂 useLayoutEffect](./docs/05-useLayoutEffect/useLayoutEffect)
 - [💾 useCallback-useMemo](./docs/06-useCallback-useMemo/useCallback-useMemo.md)
 - [🔀 useReducer](./docs/07-useReducer/useReducer.md)
 - [⬇️ useContext](./docs/08-useContext/useContext.md)
