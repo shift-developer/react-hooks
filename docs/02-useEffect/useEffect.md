@@ -6,7 +6,7 @@
 
 En ciertas ocasiones, queremos ejecutar código adicional después de que React haya actualizado el DOM. Peticiones de red, mutaciones manuales del DOM y registros, son ejemplos comunes de efectos que no requieren una acción de saneamiento. Decimos esto porque podemos ejecutarlos y olvidarnos de ellos inmediatamente. Vamos a comparar cómo las clases y los Hooks nos permiten expresar dichos efectos.
 
-En las clases de React ponemos los efectos secundarios en **componentDidMount** y **componentDidUpdate**. Volviendo a nuestro ejemplo, aquí tenemos el componente clase contador de React que actualiza el título del documento justo después de que React haga cambios en el DOM:
+En las clases de React ponemos los efectos secundarios en `componentDidMount` y `componentDidUpdate`. Volviendo a nuestro ejemplo, aquí tenemos el componente clase contador de React que actualiza el título del documento justo después de que React haga cambios en el DOM:
 
 ### Class component
 
@@ -76,7 +76,7 @@ function Example() {
 Por ejemplo, si queremos establecer una suscripción a alguna fuente de datos externa. En ese caso, ¡es importante sanear el efecto para no introducir una fuga de memoria!
 
 ### Class component
-Fíjate en como la lógica que asigna `document.title` se divide entre **componentDidMount** y **componentDidUpdate**. La lógica de la suscripción a ChatAPI también se reparte entre **componentDidMount** y **componentWillUnmount**. Y **componentDidMount** contiene código de ambas tareas.
+Fíjate en como la lógica que asigna `document.title` se divide entre `componentDidMount` y `componentDidUpdate`. La lógica de la suscripción a ChatAPI también se reparte entre `componentDidMount` y `componentWillUnmount`. Y `componentDidMount` contiene código de ambas tareas.
 
 ```javascript
 class FriendStatusWithCounter extends React.Component {
@@ -168,7 +168,7 @@ ChatAPI.unsubscribeFromFriendStatus(300, handleStatusChange); // Sanea el últim
 
 ## Omitir efectos para optimizar el rendimiento
 
-En algunos casos, sanear o aplicar el efecto después de cada renderizado puede crear problemas de rendimiento. En los componentes de clase podemos solucionarlos escribiendo una comparación extra con prevProps o prevState dentro de componentDidUpdate:
+En algunos casos, sanear o aplicar el efecto después de cada renderizado puede crear problemas de rendimiento. En los componentes de clase podemos solucionarlos escribiendo una comparación extra con `prevProps` o `prevState` dentro de `componentDidUpdate`:
 
 ### Class component
 ```javascript
