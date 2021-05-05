@@ -30,7 +30,7 @@ function TextInputWithFocusButton() {
 }
 ```
 
-El otro caso común es como referencia mutable en peticiones asíncronas
+El otro caso común es como referencia mutable en peticiones asíncronas como en este custom hook
 ```javascript
 import { useState, useEffect, useRef } from 'react';
 
@@ -190,6 +190,73 @@ export const Example = () => {
 }
 ```
 
+---
+
+## Reenviando refs en componentes de orden superior (HOCs: Higher-Order Components)
+
+Un uso muy común de `React.forwardRef` es en los HOCs. Por ejemplo en este caso uno que recibe un componente y hace un log de las propiedades que recibe en cada renderizado.
+
+```javascript
+function logProps(WrappedComponent) {
+  class LogProps extends React.Component {
+    componentDidUpdate(prevProps) {
+      console.log('old props:', prevProps);
+      console.log('new props:', this.props);
+    }
+
+    render() {
+      return <WrappedComponent {...this.props} />;
+    }
+  }
+
+  return LogProps;
+}
+```
+
+El HOC `logProps` pasa todas sus props al componente que envuelve, así que la salida renderizada será la misma. Por ejemplo, podemos usar este HOC para imprimir todas las props que son pasadas a nuestro componente `FancyButton`: 
+
+```javascript
+class FancyButton extends React.Component {
+  focus() {
+    // ...
+  }
+
+  // ...
+}
+
+// En lugar de exportar FancyButton, exportamos LogProps.
+// Esto renderizará un FancyButton igualmente.
+export default logProps(FancyButton);
+```
+
+Hay un detalle en el ejemplo anterior: las refs no son pasadas. Esto es porque `ref` no es una prop. Al igual que key, es manejada de una forma diferente por React. Si añades una `ref` a un HOC, la `ref` se referirá al componente contenedor más externo, no al componente envuelto.
+
+Lo solucionamos de la siguient forma:
+
+```javascript
+function logProps(Component) {
+  class LogProps extends React.Component {
+    componentDidUpdate(prevProps) {
+      console.log('old props:', prevProps);
+      console.log('new props:', this.props);
+    }
+
+    render() {
+      const {forwardedRef, ...rest} = this.props;
+
+      // Assign the custom prop "forwardedRef" as a ref
+      return <Component ref={forwardedRef} {...rest} />;
+    }
+  }
+
+  // Mira el segundo parámetro "ref" suministrado por React.forwardRef.
+  // Podemos pasarlo a LogProps como una prop regular, por ejemplo: "forwardedRef"
+  // Y puede ser agregado al "Component".
+  return React.forwardRef((props, ref) => {
+    return <LogProps {...props} forwardedRef={ref} />;
+  });
+}
+```
 
 ---
 [Ir a => 🔂 useLayoutEffect](../05-useLayoutEffect/useLayoutEffect.md)
