@@ -2,6 +2,11 @@
 ---
 
 # 🔗 useRef
+
+Tiene dos usos:
+- Interactuar con el DOM
+- Ser una referencia mutable (una variable que mantiene su estado entre renderizaciones y que al cambiar no genera un nuevo render)
+
 useRef devuelve un objeto ref mutable cuya propiedad .current se inicializa con el argumento pasado (initialValue). El objeto devuelto **se mantendrá persistente durante la vida completa del componente.**
 
 - Ten en cuenta que useRef no notifica cuando su contenido cambia. Mutar la propiedad .current no causa otro renderizado. 
@@ -22,6 +27,54 @@ function TextInputWithFocusButton() {
   );
 }
 ```
+
+El otro caso común es como referencia mutable en peticiones asíncronas
+```javascript
+import { useState, useEffect, useRef } from 'react';
+
+export const useFetch = ( url ) => {
+    
+    const isMounted = useRef(true);
+    const [state, setState] = useState({ data: null, loading: true, error: null });
+
+    useEffect( () => {
+        return () => {
+            isMounted.current = false;
+        }
+    }, [])
+
+
+    useEffect( () => {
+
+        setState({ data: null, loading: true, error: null });
+
+        fetch( url )
+            .then( resp => resp.json() )
+            .then( data => {
+
+                if ( isMounted.current ) {
+                    setState({
+                        loading: false,
+                        error: null,
+                        data
+                    });
+                }
+
+            })
+            .catch( () => {
+                setState({
+                    data: null,
+                    loading: false,
+                    error: 'No se pudo cargar la info'
+                })
+            })
+
+    },[url])
+
+    return state;
+}
+```
+
 ---
 
 Si quieres correr algún código cuando React agregue o quite una referencia de un nodo del DOM, puede que quieras utilizar en su lugar una referencia mediante callback. Puedes ver más acerca de useCallback presionando [aqui](../06-useCallback-useMemo/useCallback-useMemo.md).
@@ -92,7 +145,48 @@ const FancyButton = React.forwardRef((props, ref) => (
 const ref = React.createRef();
 <FancyButton ref={ref}>Click me!</FancyButton>;
 ```
+---
 
+### Ejemplo
+
+```javascript
+// <Counter/>
+import React, { useState, forwardRef, useImperativeHandle } from 'react'
+
+export const Counter = forwardRef((props, ref) => {
+  const [counter, setCounter] = useState(0);
+  const increment = () => setCount(count+1);
+  useImperativeHandle(ref, () => ({
+    increment
+  }));
+
+  return(
+    <div>
+      <button onClick={increment}>
+        click
+      </button>
+      <h2>Count: {count}</h2>
+    </div>
+  );
+})
+
+// <Example/>
+
+import React, { useRef } from 'react'
+import { Counter } from './Counter'
+
+export const Example = () => {
+  const ref = useRef();
+  return(
+    <>
+      <Counter ref={ref}/>
+      <button onClick={() => ref.current.increment()}>
+        Another button
+      </button>
+    </>
+  )
+}
+```
 
 
 ---
