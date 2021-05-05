@@ -7,9 +7,11 @@ Tiene dos usos:
 - Interactuar con el DOM
 - Ser una referencia mutable (una variable que mantiene su estado entre renderizaciones y que al cambiar no genera un nuevo render)
 
-useRef devuelve un objeto ref mutable cuya propiedad .current se inicializa con el argumento pasado (initialValue). El objeto devuelto **se mantendrá persistente durante la vida completa del componente.**
+useRef devuelve un objeto ref mutable cuya propiedad .current se inicializa con el argumento pasado (initialValue). 
 
-- Ten en cuenta que useRef no notifica cuando su contenido cambia. Mutar la propiedad .current no causa otro renderizado. 
+---
+### ⚠️ useRef no notifica cuando su contenido cambia. Mutar la propiedad .current no causa otro renderizado. El objeto devuelto se mantendrá persistente durante la vida completa del componente.
+---
 
 Un caso de uso común es para acceder a un hijo imperativamente:
 ```javascript
