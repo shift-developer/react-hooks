@@ -275,3 +275,116 @@ export const MainApp = () => {
 ```
 ---
 
+
+# Pruebas
+
+```javascript
+import React from 'react';
+import { mount } from 'enzyme';
+import { HomeScreen } from '/../components/HomeScreen';
+import { UserContext } from '/../components/UserContext';
+
+
+describe('Pruebas en <HomeScreen />', () => {
+
+    const user = {
+        name: 'John',
+        email: 'john@gmail.com'
+    }
+
+    const wrapper = mount(
+        <UserContext.Provider value={{
+            user
+        }}>
+            <HomeScreen />  
+        </UserContext.Provider>
+    );
+
+    test('debe de mostrarse correctamente', () => {
+
+        expect( wrapper ).toMatchSnapshot();
+        
+    })
+    
+    
+})
+
+```
+
+---
+
+```javascript
+import React from 'react';
+import { mount } from 'enzyme';
+import { AppRouter } from '../components/AppRouter';
+import { UserContext } from '../components/UserContext';
+
+
+describe('Pruebas en <AppRouter />', () => {
+    
+    const user = {
+        id: 1,
+        name: 'Juan'
+    }
+
+    const wrapper = mount( 
+        <UserContext.Provider value={{
+            user
+        }}>
+            <AppRouter /> 
+        </UserContext.Provider>
+    );
+
+
+    test('debe de mostrarse correctamente', () => {
+
+        expect( wrapper ).toMatchSnapshot();
+        
+    })
+    
+
+})
+
+```
+
+```javascript
+import React from 'react';
+import { mount } from 'enzyme';
+import { UserContext } from '../components/UserContext';
+import { LoginScreen } from '../components/LoginScreen';
+
+
+describe('Pruebas en <LoginScreen />', () => {s
+    
+    const setUser = jest.fn();
+    
+    const wrapper = mount(
+        <UserContext.Provider value={{
+            setUser
+        }}>
+            <LoginScreen />
+        </UserContext.Provider>
+    )
+
+    test('debe de mostrarse correctamente', () => {
+        expect( wrapper ).toMatchSnapshot();
+    });
+
+
+    test('debe de ejecutar el setUser con el argumento esperado', () => {
+       
+        wrapper.find('button').prop('onClick')();
+
+        expect( setUser ).toHaveBeenCalledWith({
+            id: 123,
+            name: 'Fernando'
+        })
+        
+    });
+    
+    
+
+})
+
+
+```
